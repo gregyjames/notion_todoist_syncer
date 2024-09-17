@@ -1,5 +1,5 @@
 # notion_todoist_syncer
-A self-hosted bidirectional Syncer for Notion and Todoist.
+A self-hosted bidirectional Syncer for Notion and Todoist because screw paying for Zapier, IFTTT, and 2Sync.
 
 ## Todo
 
