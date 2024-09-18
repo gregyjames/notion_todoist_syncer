@@ -228,6 +228,6 @@ def sync_deleted_todoist_tasks_notion():
             archive_page(page.notion_task_id)
             db.remove(page.todoist_task_id == row["todoist_task_id"])
 
-#sync_notion_to_todoist()
-
-sync_todoist_to_notion()
+if __name__ == "__main__":
+    #sync_notion_to_todoist()
+    sync_todoist_to_notion()
