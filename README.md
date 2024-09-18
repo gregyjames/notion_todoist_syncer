@@ -11,6 +11,19 @@
 
 A self-hosted bidirectional Syncer for Notion and Todoist because screw paying for Zapier, IFTTT, and 2Sync.
 
+## Setup
+### config.json
+```json
+{
+    "todoist_api_key": "",
+    "notion_api_key": "",
+    "database_id": "",
+    "project_id": "",
+    "notion_status_tag_name": "Status",
+    "notion_done_status": "Completed",
+    "notion_default_status": "Next Up"
+}
+```
 ## Todo
 
 - [x] Todoist-To-Notion
@@ -33,3 +46,4 @@ A self-hosted bidirectional Syncer for Notion and Todoist because screw paying f
 - [ ] Improve performance
 - [ ] GUI?
 - [ ] Sync Reports (i.e failure/success/total/new)
+- [ ] Switch to SQLite over TinyDB for note sync cache
