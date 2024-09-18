@@ -48,6 +48,7 @@ A self-hosted bidirectional Syncer for Notion and Todoist because screw paying f
 - [ ] GUI?
 - [ ] Sync Reports (i.e failure/success/total/new)
 - [ ] Switch to SQLite over TinyDB for note sync cache
+- [ ] Package into container
 
 ## License 
 MIT License
