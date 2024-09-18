@@ -9,7 +9,7 @@
 </tr>
 </table>
 
-A self-hosted bidirectional Syncer for Notion and Todoist because screw paying for Zapier, IFTTT, and 2Sync.
+A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the need for paid services like Zapier, IFTTT, and 2Sync. This solution was designed for personal use, combining my preference for Notion's powerful database capabilities with Todoist's ease of use for task management. By simplifying the process, I no longer need to navigate Notion's interface just to add a new task, streamlining my workflow effectively.
 
 ## Setup
 ### config.json
