@@ -1,11 +1,11 @@
 from objects.helpers import configuration
 from objects.helpers import cache
-from objects.helpers import configuration
-from objects.helpers import cache
 from objects import NotionWrapper
 from objects.TodoistWrapper import TodoistWrapper
 from objects.NotionTask import NotionTask
 import logging
+import requests
+from tinydb import Query
 
 
 class TodoistNotionSyncer:
@@ -35,11 +35,11 @@ class TodoistNotionSyncer:
                     )
                 else:
                     logging.info(f'Processing existing task "{task.title} {task.id}"')
-                    if task.iscomplete == True:
+                    if task.iscomplete:
                         notion_id = cache.query_for_notion_id(task.id)
                         notion_task = NotionTask(notion_id)
                         notion_task.update_select_tag_on_page(
-                            notion_id, notion_done_status
+                            notion_id, NotionWrapper.notion_done_status
                         )
             self.sync_todoist_completed_tasks_notion()
         except Exception as error:
@@ -63,7 +63,8 @@ class TodoistNotionSyncer:
             try:
                 pass
                 # task = TodoistWrapper.api.get_task(row["todoist_task_id"])
-            except requests.exceptions.HTTPError as http_err:
+            except requests.exceptions.HTTPError:
                 page = Query()
-                archive_page(page.notion_task_id)
-                db.remove(page.todoist_task_id == row["todoist_task_id"])
+                notion_task = NotionTask(page.notion_task_id)
+                notion_task.archive_page()
+                cache.db.remove(page.todoist_task_id == row["todoist_task_id"])

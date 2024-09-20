@@ -21,10 +21,10 @@ def load_logging_config():
             logging_config = json.load(file)
             return logging_config
     except FileNotFoundError:
-        logging.error(f"Configuration file {file_path} not found.")
+        logging.error("Logging configuration file (logging.json) not found.")
         return None
     except json.JSONDecodeError:
-        logging.error(f"Error decoding JSON from {file_path}.")
+        logging.error("Error decoding JSON from logging.json.")
         return None
 
 

@@ -1,4 +1,3 @@
-from . import NotionTask
 from .helpers import configuration
 from notion_client import Client
 import logging

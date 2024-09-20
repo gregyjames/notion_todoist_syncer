@@ -1,4 +1,5 @@
 from . import NotionWrapper
+import logging
 
 
 class NotionTask:
@@ -8,7 +9,7 @@ class NotionTask:
     def get_tags_from_page(self) -> bool:
         try:
             # Retrieve the page properties
-            page = NotionWrapper.notion_api.pages.retrieve(page_id=note_id)
+            page = NotionWrapper.notion_api.pages.retrieve(page_id=self.note_id)
 
             # Assuming the tags are stored in a property called "Status"
             select_property = page["properties"].get(
@@ -17,7 +18,7 @@ class NotionTask:
 
             if select_property["type"] == "select":
                 selected_tag = select_property["select"]
-                if selected_tag["name"] == notion_done_status:
+                if selected_tag["name"] == NotionWrapper.notion_done_status:
                     logging.debug(f"Task {self.note_id} is completed.")
                     return True
                 else:

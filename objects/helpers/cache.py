@@ -24,7 +24,7 @@ def query_all_noncompleted_todoist_rows():
 
 def query_for_notion_id(todoist_id):
     notion_results = Query()
-    result = db.search(exists_in_todoist.todoist_task_id == todoist_id)
+    result = db.search(notion_results.todoist_task_id == todoist_id)
     notion_id = result[0]["notion_task_id"]
     return notion_id
 
