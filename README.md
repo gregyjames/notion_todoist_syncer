@@ -27,8 +27,8 @@ A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the ne
 ## Todo
 
 - [x] Todoist-To-Notion
-  - [x]   Deleted Notes
-  - [x]   Completed Notes
+  - [ ]   Deleted Notes
+  - [ ]   Completed Notes
   - [x]   New notes
     - [x] Title
     - [x] Content
