@@ -1,4 +1,5 @@
 [![Build](https://github.com/gregyjames/notion_todoist_syncer/actions/workflows/python-app.yml/badge.svg?event=push)](https://github.com/gregyjames/notion_todoist_syncer/actions/workflows/python-app.yml)
+[![Docker Image CI](https://github.com/gregyjames/notion_todoist_syncer/actions/workflows/docker-image.yml/badge.svg)](https://github.com/gregyjames/notion_todoist_syncer/actions/workflows/docker-image.yml)
 ![GitHub License](https://img.shields.io/github/license/gregyjames/notion_todoist_syncer)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fgregyjames%2Fnotion_todoist_syncer%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)
