@@ -16,6 +16,9 @@ def init_connection():
 
     conn = sqlite3.connect("cache.db")
     cursor = conn.cursor()
+    cursor.execute("PRAGMA journal_mode=WAL;")
+    current_mode = cursor.fetchone()[0]
+    # logging.info(f"Current journal mode: {current_mode}")
     logging.info("Database connection established.")
 
 
