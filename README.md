@@ -20,16 +20,23 @@ A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the ne
 ### config.json
 ```json
 {
-    "todoist_api_key": "",
-    "notion_api_key": "", 
-    "database_id": "",                  // The ID of the database to use.
-    "project_id": "",                   // The project id to use in todoist.
-    "notion_status_tag_name": "Status", // Select tag on notion task.
-    "notion_done_status": "Completed",  // The select tag value for a completed task in notion.
-    "notion_default_status": "Next Up", // Default notion task status.
-    "cron": "*/5 * * * *"               // Runs every 5 minutes.
+"todoist_api_key": "",
+"notion_api_key": "",
+"database_id": "",
+"project_id": "",
+"notion_status_tag_name": "Status",
+"notion_done_status": "Completed",
+"notion_default_status": "Next Up",
+"cron": "*/5 * * * *"
 }
 ```
+- #### Values
+	- database_id: The ID of the database to use.
+	- project_id: The project id to use in todoist.
+	- notion_status_tag_name: Select tag name on notion task in database.
+	- notion_done_status: The select tag value for a completed task in notion.
+	- notion_default_status: Default notion task status for new task (i.e which column in kanban).
+	- cron: Runs every 5 minutes.
 ## Todo
 
 - [x] Todoist-To-Notion
