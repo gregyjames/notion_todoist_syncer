@@ -1,4 +1,4 @@
-name: Build Python App with UV Package Manager
+name: Build
 
 on:
   push:
