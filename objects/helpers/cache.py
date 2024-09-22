@@ -3,18 +3,29 @@ import logging
 import os
 
 
+conn = None
+cursor = None
+
+
+def init_connection():
+    """
+    Initializes a persistent connection and cursor.
+    """
+    global conn
+    global cursor
+
+    if conn is None:
+        conn = sqlite3.connect("cache.db")
+        cursor = conn.cursor()
+        logging.info("Database connection established.")
+
+
 def create_tables():
     """
     Creates the tables in the cache database if they are not found.
     """
     if not os.path.exists("cache.db"):
         logging.info("DB File does not exist, creating new one...")
-
-    global conn
-    global cursor
-
-    conn = sqlite3.connect("cache.db")
-    cursor = conn.cursor()
 
     cursor.execute(
         """
@@ -91,8 +102,11 @@ def close_connection():
     """
     Closes the connection to the sqlite database.
     """
-    cursor.close()
-    conn.close()
+    if cursor is not None:
+        cursor.close()
+    if conn is not None:
+        conn.close()
+    logging.info("Database connection closed.")
 
 
 def get_notion_task_from_todoist(todoist_id):

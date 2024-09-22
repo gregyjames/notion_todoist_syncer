@@ -14,6 +14,7 @@ todoistnotionsyncer = TodoistNotionSyncer()
 
 def todoist_notion_sync_task():
     logging.info("Running scheduled task to sync todoist to notion...")
+    cache.init_connection()
     cache.create_tables()
     todoistnotionsyncer.sync_todoist_to_notion()
     cache.close_connection()
