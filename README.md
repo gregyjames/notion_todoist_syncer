@@ -29,7 +29,7 @@ A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the ne
 ## Todo
 
 - [x] Todoist-To-Notion
-  - [ ]   Deleted Notes
+  - [x]   Deleted Notes
   - [x]   Completed Notes
   - [x]   New notes
     - [x] Title
@@ -48,8 +48,8 @@ A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the ne
 - [ ] Refactor and Clean up code
 - [ ] Improve performance
 - [ ] GUI?
-- [ ] Sync Reports (i.e failure/success/total/new)
-- [ ] Switch to SQLite over TinyDB for note sync cache
+- [x] Sync Reports (i.e failure/success/total/new)
+- [x] Switch to SQLite over TinyDB for note sync cache
 - [ ] Package into container
 
 ## License 

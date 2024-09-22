@@ -14,8 +14,9 @@ class TodoistTask:
     title: str
     priority: int
 
-    def isNewTask(self):
-        return cache.check_if_todoist_task_exists(self.id)
+    def isNewTask(self) -> bool:
+        # logging.info(f"{cache.get_notion_task_from_todoist(self.id) == ""}")
+        return cache.get_notion_task_from_todoist(self.id) == ""
 
 
 class TodoistWrapper:

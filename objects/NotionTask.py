@@ -1,5 +1,7 @@
 from . import NotionWrapper
 import logging
+from notion_client import APIResponseError
+from .helpers import cache
 
 
 class NotionTask:
@@ -59,5 +61,7 @@ class NotionTask:
             # Archive (soft-delete) the page by setting 'archived' to True
             NotionWrapper.notion_api.pages.update(page_id=self.note_id, archived=True)
             logging.info(f"Task {self.note_id} has been archived (soft-deleted).")
+        except APIResponseError as e:
+            cache.delete_notion_task(self.note_id)
         except Exception as e:
-            print(f"An error occurred archieving task #{self.note_id}: {e}")
+            logging.error(f"An error occurred archieving task #{self.note_id}: {e}")

@@ -163,3 +163,4 @@ cython_debug/
 config.json
 db.json
 .wakatime-project
+cache.db
