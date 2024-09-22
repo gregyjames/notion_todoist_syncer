@@ -5,16 +5,8 @@
 ![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fgregyjames%2Fnotion_todoist_syncer%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7e949114269c4956b8ed39900dbe3c22)](https://app.codacy.com/gh/gregyjames/notion_todoist_syncer/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-<table style="border: none;">
-<tr style="border: none;">
-  <td style="border: none;">
-    <img src="./icon.svg">
-  </td>
-  <td style="border: none;">
-    <h1>NotionTodoistSyncer</h1>
-  </td>
-</tr>
-</table>
+<img src="./logo.png">
+
 
 A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the need for paid services like Zapier, IFTTT, and 2Sync. This solution was designed for personal use, combining my preference for Notion's powerful database capabilities with Todoist's ease of use for task management. By simplifying the process, I no longer need to navigate Notion's interface just to add a new task, streamlining my workflow effectively.
 
