@@ -62,6 +62,9 @@ class NotionTask:
             NotionWrapper.notion_api.pages.update(page_id=self.note_id, archived=True)
             logging.info(f"Task {self.note_id} has been archived (soft-deleted).")
         except APIResponseError as e:
+            logging.error(
+                f"{e} -> Looks like the notion task #{self.note_id} was deleted, deleting it from cache..."
+            )
             cache.delete_notion_task(self.note_id)
         except Exception as e:
             logging.error(f"An error occurred archieving task #{self.note_id}: {e}")

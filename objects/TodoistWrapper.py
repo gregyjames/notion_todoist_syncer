@@ -13,9 +13,9 @@ class TodoistTask:
     iscomplete: bool
     title: str
     priority: int
+    due: str
 
     def isNewTask(self) -> bool:
-        # logging.info(f"{cache.get_notion_task_from_todoist(self.id) == ""}")
         return cache.get_notion_task_from_todoist(self.id) == ""
 
 
@@ -26,6 +26,9 @@ class TodoistWrapper:
         pass
 
     def add_task_to_todoist(self, project_str, content_str) -> str:
+        """
+        Adds a new task to the todoist project.
+        """
         task = self.api.add_task(
             content=content_str, project=project_str, is_completed=False
         )
@@ -33,5 +36,14 @@ class TodoistWrapper:
 
     @classmethod
     def get_tasks(self):
+        """
+        Generator method to wrap and get tasks from todoist.
+        """
         for task in TodoistWrapper.api.get_tasks(project_id=project_id):
-            yield TodoistTask(task.id, task.is_completed, task.content, task.priority)
+            yield TodoistTask(
+                task.id,
+                task.is_completed,
+                task.content,
+                task.priority,
+                task.due.datetime if task.due is not None else None,
+            )

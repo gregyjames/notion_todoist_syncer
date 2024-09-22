@@ -1,6 +1,7 @@
 from .helpers import configuration
 from notion_client import Client
 import logging
+import tzlocal
 
 notion_api_key = configuration.config.get("notion_api_key")
 notion_api = Client(auth=notion_api_key)
@@ -15,19 +16,26 @@ class NotionWrapper:
     database_id = configuration.config.get("database_id")
 
     @classmethod
-    def create_subpage_in_database(self, title, status, priority) -> str:
+    def create_subpage_in_database(self, title, status, priority, due) -> str:
         try:
             notion_priority = todoist_notion_priority_map[priority]
+            properties = {
+                "Name": {"title": [{"text": {"content": title}}]},
+                "Status": {"select": {"name": status}},
+                "Priority": {"select": {"name": notion_priority}},
+            }
+
+            if due is not None:
+                # Uses localtime zone to set due time of new note
+                local_timezone = tzlocal.get_localzone()
+                properties["Due Date"] = {
+                    "date": {"start": due, "time_zone": str(local_timezone)}
+                }
+
             # Create a new page (subpage) in the database
             new_page = notion_api.pages.create(
                 parent={"database_id": NotionWrapper.database_id},
-                properties={
-                    "Name": {"title": [{"text": {"content": title}}]},
-                    # Add other properties here (e.g., tags, status, etc.)
-                    # For example, adding a "Status" property (which is a select):
-                    "Status": {"select": {"name": status}},
-                    "Priority": {"select": {"name": notion_priority}},
-                },
+                properties=(properties),
             )
 
             logging.info(

@@ -29,7 +29,10 @@ class TodoistNotionSyncer:
                 if task.isNewTask():
                     logging.info(f'New task "{task.title} {task.id}"')
                     notion_id = NotionWrapper.NotionWrapper.create_subpage_in_database(
-                        task.title, NotionWrapper.notion_default_status, task.priority
+                        task.title,
+                        NotionWrapper.notion_default_status,
+                        task.priority,
+                        task.due,
                     )
                     relation_id = cache.add_to_task_cache(
                         notion_id,
@@ -41,7 +44,7 @@ class TodoistNotionSyncer:
                     cache.add_notion_task(
                         notion_id,
                         task.title,
-                        "",
+                        task.due,
                         relation_id,
                         NotionWrapper.notion_default_status,
                     )
@@ -64,6 +67,9 @@ class TodoistNotionSyncer:
         self.sync_stats()
 
     def sync_todoist_completed_tasks_notion(self):
+        """
+        Syncs completed tasks from todoist to notion.
+        """
         logging.info("Syncing completed tasks...")
         results = cache.query_all_noncompleted_todoist_rows()
         for result in results:
@@ -79,11 +85,14 @@ class TodoistNotionSyncer:
                         task.id, NotionWrapper.notion_done_status
                     )
                     self.updated += 1
-            except:
-                logging.error(f"Error updating todoist task #{result[0]}")
+            except Exception as e:
+                logging.error(f"Error updating todoist task #{result[0]}: {e}")
                 self.fail += 1
 
     def sync_deleted_todoist_tasks_notion(self):
+        """
+        Syncs deleted tasks from todoist to notion.
+        """
         logging.info("Syncing deleted tasks...")
         rows = cache.query_all_rows()
         for row in rows:
@@ -98,11 +107,14 @@ class TodoistNotionSyncer:
                 # cache.db.remove(page.todoist_task_id == row["todoist_task_id"])
                 cache.delete_todoist_task(row[1])
                 self.deleted += 1
-            except:
-                logging.error(f"Error deleting notion task {row[2]}")
+            except Exception as e:
+                logging.error(f"Error deleting notion task {row[2]}: {e}")
                 self.fail += 1
 
     def sync_stats(self):
+        """
+        Gets the sync stats for todoist to notion sync.
+        """
         logging.info(
             f"TodoistNotionSync -> New: {self.new} -> Updated: {self.updated} -> Deleted: {self.deleted} -> Fail: {self.fail}"
         )

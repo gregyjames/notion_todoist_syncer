@@ -4,6 +4,9 @@ import os
 
 
 def create_tables():
+    """
+    Creates the tables in the cache database if they are not found.
+    """
     if not os.path.exists("cache.db"):
         logging.info("DB File does not exist, creating new one...")
 
@@ -66,6 +69,9 @@ def create_tables():
 
 
 def get_notion_task_from_todoist(todoist_id):
+    """
+    Gets the corresponding notion task id from a todoist task id.
+    """
     cursor.execute(
         """
         SELECT NotionTaskID FROM Relation
@@ -82,6 +88,9 @@ def get_notion_task_from_todoist(todoist_id):
 
 
 def query_all_noncompleted_todoist_rows():
+    """
+    Gets all pending todoist rows from cache.
+    """
     cursor.execute(
         """
         SELECT ID FROM TodoistTasks
@@ -93,6 +102,9 @@ def query_all_noncompleted_todoist_rows():
 
 
 def update_status_from_todoist(todoist_id, notion_done_status):
+    """
+    Uses the completed todoist task id to updated the status of the corresponding notion and todoist tasks in the cache.
+    """
     cursor.execute(
         """
         SELECT NotionTaskID FROM Relation
@@ -135,6 +147,9 @@ def update_status_from_todoist(todoist_id, notion_done_status):
 
 
 def get_todoist_task_from_notion(notion_id):
+    """
+    Gets the corresponding todoist task from the notion task id.
+    """
     cursor.execute(
         """
         SELECT TodoistTaskID FROM Relation
@@ -150,6 +165,9 @@ def get_todoist_task_from_notion(notion_id):
 
 
 def query_all_rows():
+    """
+    Returns all the note relations.
+    """
     cursor.execute(
         """
         SELECT * FROM Relation
@@ -160,6 +178,9 @@ def query_all_rows():
 
 
 def add_notion_task(id, title, duedate, relationid, status):
+    """
+    Adds a new notion task to the cache.
+    """
     try:
         data = [(str(id), str(title), str(duedate), relationid, status)]
         cursor.executemany(
@@ -174,6 +195,9 @@ def add_notion_task(id, title, duedate, relationid, status):
 
 
 def add_todoist_task(id, title, relationid, status):
+    """
+    Adds a new todoist task to the cache.
+    """
     try:
         data = [(id, str(title), relationid, str(status))]
         cursor.executemany(
@@ -244,6 +268,9 @@ def delete_notion_task(task_id):
 
 
 def delete_relation_row(id):
+    """
+    Deletes a relation row based on the provided notion/todoist task id.
+    """
     cursor.execute(
         """
         DELETE FROM Relation

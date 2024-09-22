@@ -34,7 +34,7 @@ A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the ne
   - [x]   New notes
     - [x] Title
     - [x] Content
-    - [ ] Due date
+    - [x] Due date
     - [x] Priority
   - [ ] Note property changes        
 - [ ] Notion-To-Todoist
