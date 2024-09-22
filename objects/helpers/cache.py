@@ -68,6 +68,14 @@ def create_tables():
     conn.commit()
 
 
+def close_connection():
+    """
+    Closes the connection to the sqlite database.
+    """
+    cursor.close()
+    conn.close()
+
+
 def get_notion_task_from_todoist(todoist_id):
     """
     Gets the corresponding notion task id from a todoist task id.

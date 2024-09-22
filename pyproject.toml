@@ -4,6 +4,7 @@ authors = [
 ]
 dependencies = [
   "anyio==4.4.0",
+  "apscheduler>=3.10.4",
   "certifi==2024.8.30",
   "charset-normalizer==3.3.2",
   "h11==0.14.0",
