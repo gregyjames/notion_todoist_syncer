@@ -37,6 +37,16 @@ def create_tables():
         logging.info("Tables already exist. No need to create them.")
         return
 
+    # Enable FULL auto_vacuum if it's not already set
+    cursor.execute("PRAGMA auto_vacuum;")
+    current_mode = cursor.fetchone()[0]
+
+    if current_mode != 1:  # 1 means FULL auto_vacuum
+        logging.info("Enabling FULL auto_vacuum mode...")
+        cursor.execute("PRAGMA auto_vacuum = FULL;")
+        cursor.execute("VACUUM;")  # Apply the change by vacuuming the database
+        conn.commit()
+
     logging.info("Creating tables and indexes...")
     cursor.executescript(
         """
