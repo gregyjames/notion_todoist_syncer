@@ -15,7 +15,6 @@ todoistnotionsyncer = TodoistNotionSyncer()
 def todoist_notion_sync_task():
     logging.info("Running scheduled task to sync todoist to notion...")
     cache.init_connection()
-    cache.create_tables()
     todoistnotionsyncer.sync_todoist_to_notion()
     cache.close_connection()
     logging.info("Syncer done.")
@@ -34,6 +33,9 @@ scheduler.add_job(
 if __name__ == "__main__":
     logging.config.dictConfig(load_logging_config())
     try:
+        cache.init_connection()
+        cache.create_tables()
+        cache.close_connection()
         logging.info("Scheduler started. Press Ctrl+C to exit.")
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
