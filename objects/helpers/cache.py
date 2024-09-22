@@ -19,7 +19,7 @@ def create_tables():
     cursor.execute(
         """
         SELECT name FROM sqlite_master WHERE type='table' AND name='Relation';
-    """
+        """
     )
     table_exists = cursor.fetchone()
 
@@ -30,37 +30,56 @@ def create_tables():
     logging.info("Creating Relation Table...")
     cursor.execute(
         """
-        CREATE TABLE "Relation" (
-	    "ID"	INTEGER NOT NULL UNIQUE,
-	    "TodoistTaskID"	TEXT NOT NULL UNIQUE,
-	    "NotionTaskID"	TEXT NOT NULL UNIQUE,
-	    PRIMARY KEY("ID" AUTOINCREMENT)
+        CREATE TABLE IF NOT EXISTS "Relation" (
+        "ID"	INTEGER NOT NULL UNIQUE,
+        "TodoistTaskID"	TEXT NOT NULL UNIQUE,
+        "NotionTaskID"	TEXT NOT NULL UNIQUE,
+        PRIMARY KEY("ID" AUTOINCREMENT)
         );
+        """
+    )
+    # Add indexes to Relation table
+    cursor.execute(
+        """
+        CREATE INDEX IF NOT EXISTS idx_relation_todoist
+        ON Relation (TodoistTaskID);
+        """
+    )
+    cursor.execute(
+        """
+        CREATE INDEX IF NOT EXISTS idx_relation_notion
+        ON Relation (NotionTaskID);
         """
     )
     logging.info("Created Relation Table.")
     cursor.execute(
         """
-        CREATE TABLE "TodoistTasks" (
-	    "ID"	TEXT UNIQUE,
-	    "Title"	TEXT,
-	    "RelationID"	INTEGER NOT NULL,
-	    "Status"	TEXT,
-	    PRIMARY KEY("ID")
+        CREATE TABLE IF NOT EXISTS "TodoistTasks" (
+        "ID"	TEXT UNIQUE,
+        "Title"	TEXT,
+        "RelationID"	INTEGER NOT NULL,
+        "Status"	TEXT,
+        PRIMARY KEY("ID")
         );
+        """
+    )
+    cursor.execute(
+        """
+        CREATE INDEX IF NOT EXISTS idx_todoist_status
+        ON TodoistTasks (Status);
         """
     )
     logging.info("Created TodoistTasks Table.")
     cursor.execute(
         """
-        CREATE TABLE "NotionTask" (
-	    "ID"	TEXT,
-	    "Title"	TEXT,
-	    "DueDate"	TEXT NOT NULL,
-	    "RelationID"	INTEGER NOT NULL,
-	    "Status"	TEXT,
-	    PRIMARY KEY("ID"),
-	    FOREIGN KEY("RelationID") REFERENCES "Relation"("ID")
+        CREATE TABLE IF NOT EXISTS "NotionTask" (
+        "ID"	TEXT,
+        "Title"	TEXT,
+        "DueDate"	TEXT NOT NULL,
+        "RelationID"	INTEGER NOT NULL,
+        "Status"	TEXT,
+        PRIMARY KEY("ID"),
+        FOREIGN KEY("RelationID") REFERENCES "Relation"("ID")
         );
         """
     )
