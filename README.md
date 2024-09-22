@@ -3,6 +3,7 @@
 ![GitHub License](https://img.shields.io/github/license/gregyjames/notion_todoist_syncer)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fgregyjames%2Fnotion_todoist_syncer%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7e949114269c4956b8ed39900dbe3c22)](https://app.codacy.com/gh/gregyjames/notion_todoist_syncer/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 <table style="border: none;">
 <tr style="border: none;">
