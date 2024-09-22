@@ -14,10 +14,9 @@ def init_connection():
     global conn
     global cursor
 
-    if conn is None:
-        conn = sqlite3.connect("cache.db")
-        cursor = conn.cursor()
-        logging.info("Database connection established.")
+    conn = sqlite3.connect("cache.db")
+    cursor = conn.cursor()
+    logging.info("Database connection established.")
 
 
 def create_tables():
@@ -38,33 +37,25 @@ def create_tables():
         logging.info("Tables already exist. No need to create them.")
         return
 
-    logging.info("Creating Relation Table...")
-    cursor.execute(
+    logging.info("Creating tables and indexes...")
+    cursor.executescript(
         """
+        -- Create Relation table
         CREATE TABLE IF NOT EXISTS "Relation" (
         "ID"	INTEGER NOT NULL UNIQUE,
         "TodoistTaskID"	TEXT NOT NULL UNIQUE,
         "NotionTaskID"	TEXT NOT NULL UNIQUE,
         PRIMARY KEY("ID" AUTOINCREMENT)
         );
-        """
-    )
-    # Add indexes to Relation table
-    cursor.execute(
-        """
+
+        -- Create indexes for Relation table
         CREATE INDEX IF NOT EXISTS idx_relation_todoist
         ON Relation (TodoistTaskID);
-        """
-    )
-    cursor.execute(
-        """
+
         CREATE INDEX IF NOT EXISTS idx_relation_notion
         ON Relation (NotionTaskID);
-        """
-    )
-    logging.info("Created Relation Table.")
-    cursor.execute(
-        """
+
+        -- Create TodoistTasks table
         CREATE TABLE IF NOT EXISTS "TodoistTasks" (
         "ID"	TEXT UNIQUE,
         "Title"	TEXT,
@@ -72,17 +63,12 @@ def create_tables():
         "Status"	TEXT,
         PRIMARY KEY("ID")
         );
-        """
-    )
-    cursor.execute(
-        """
+
+        -- Create index for TodoistTasks table
         CREATE INDEX IF NOT EXISTS idx_todoist_status
         ON TodoistTasks (Status);
-        """
-    )
-    logging.info("Created TodoistTasks Table.")
-    cursor.execute(
-        """
+
+        -- Create NotionTask table
         CREATE TABLE IF NOT EXISTS "NotionTask" (
         "ID"	TEXT,
         "Title"	TEXT,
@@ -94,8 +80,8 @@ def create_tables():
         );
         """
     )
-    logging.info("Created NotionTask Table.")
     conn.commit()
+    logging.info("Tables and indexes created successfully.")
 
 
 def close_connection():
