@@ -55,7 +55,7 @@ class TodoistNotionSyncer:
                 else:
                     logging.info(f'Processing existing task "{task.title} {task.id}"')
                     if task.iscomplete:
-                        notion_id = cache.query_for_notion_id(task.id)
+                        notion_id = cache.get_notion_task_from_todoist(task.id)
                         notion_task = NotionTask(notion_id)
                         notion_task.update_select_tag_on_page(
                             notion_id, NotionWrapper.notion_done_status
