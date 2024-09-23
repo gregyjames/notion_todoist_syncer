@@ -39,7 +39,7 @@ async def main():
         logging.info("Scheduler started. Press Ctrl+C to exit.")
         scheduler.start()
         await asyncio.Event().wait()
-    except (KeyboardInterrupt, SystemExit):
+    except (KeyboardInterrupt, SystemExit, asyncio.exceptions.CancelledError):
         logging.error("Scheduler ended.")
         pass
 
