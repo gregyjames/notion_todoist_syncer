@@ -16,9 +16,14 @@ async def init_connection():
 
     conn = await aiosqlite.connect("cache.db")
     cursor = await conn.cursor()
+    # SET WAL mode
     await cursor.execute("PRAGMA journal_mode=WAL;")
     current_mode = (await cursor.fetchone())[0]
     logging.debug(f"Current journal mode: {current_mode}")
+    # SET Locking mode to exclusive
+    await cursor.execute("PRAGMA locking_mode=EXCLUSIVE;")
+    locking_mode = (await cursor.fetchone())[0]
+    logging.debug(f"Current locking mode: {locking_mode}")
     logging.info("Database connection established.")
 
 
