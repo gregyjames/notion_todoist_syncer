@@ -25,7 +25,7 @@ class TodoistNotionSyncer:
             logging.info("Processing tasks from Todoist...")
 
             for task in TodoistWrapper.get_tasks():
-                logging.info(f"Task ID: {task.id}")
+                logging.debug(f"Task ID: {task.id}")
                 if task.isNewTask():
                     logging.info(f'New task "{task.title} {task.id}"')
                     notion_id = NotionWrapper.NotionWrapper.create_subpage_in_database(
@@ -40,7 +40,7 @@ class TodoistNotionSyncer:
                         NotionWrapper.notion_default_status,
                         task.iscomplete,
                     )
-                    logging.info(f"Relation id: {relation_id}")
+                    logging.debug(f"Relation id: {relation_id}")
                     cache.add_notion_task(
                         notion_id,
                         task.title,
@@ -53,16 +53,20 @@ class TodoistNotionSyncer:
                     )
                     self.new += 1
                 else:
-                    logging.info(f'Processing existing task "{task.title} {task.id}"')
+                    # TODO: Add logic to update existing note tags here
                     if task.iscomplete:
+                        logging.info(
+                            f'Processing existing task "{task.title} {task.id}"'
+                        )
                         notion_id = cache.get_notion_task_from_todoist(task.id)
                         notion_task = NotionTask(notion_id)
                         notion_task.update_select_tag_on_page(
                             notion_id, NotionWrapper.notion_done_status
                         )
+                        self.updated += 1
             self.sync_todoist_completed_tasks_notion()
         except Exception as error:
-            logging.error(error)
+            logging.critical(f"Error processing task #{task.id}: {error}")
             self.fail += 1
         self.sync_stats()
 
@@ -86,7 +90,7 @@ class TodoistNotionSyncer:
                     )
                     self.updated += 1
             except Exception as e:
-                logging.error(f"Error updating todoist task #{result[0]}: {e}")
+                logging.critical(f"Error updating todoist task #{result[0]}: {e}")
                 self.fail += 1
 
     def sync_deleted_todoist_tasks_notion(self):
@@ -99,16 +103,15 @@ class TodoistNotionSyncer:
             try:
                 TodoistWrapper.api.get_task(row[1])
             except requests.exceptions.HTTPError:
-                # page = Query()
+                # The api throws an error if the note isn't found
                 notion_task = NotionTask(row[2])
                 notion_task.archive_page()
                 cache.delete_relation_row(row[1])
                 cache.delete_notion_task(row[2])
-                # cache.db.remove(page.todoist_task_id == row["todoist_task_id"])
                 cache.delete_todoist_task(row[1])
                 self.deleted += 1
             except Exception as e:
-                logging.error(f"Error deleting notion task {row[2]}: {e}")
+                logging.critical(f"Error deleting notion task {row[2]}: {e}")
                 self.fail += 1
 
     def sync_stats(self):

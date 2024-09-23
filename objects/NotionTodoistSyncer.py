@@ -36,4 +36,4 @@ class NotionTodoistSyncer:
                         cache.add_to_task_cache(page_id, todoist_id)
 
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
+            logging.critical(f"An error occurred: {e}")

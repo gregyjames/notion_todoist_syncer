@@ -43,7 +43,7 @@ class NotionWrapper:
             )
             return new_page["id"]
         except Exception as e:
-            logging.error(
+            logging.critical(
                 f"An error occurred creating page in notion for task '{title}': {e}"
             )
             return ""

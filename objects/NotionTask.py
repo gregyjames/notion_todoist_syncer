@@ -27,12 +27,12 @@ class NotionTask:
                     logging.debug(f"Task {self.note_id} doesn't have selected tag.")
                     return False
             else:
-                logging.info(
+                logging.error(
                     f"The completion property on task {self.note_id} is not a select type."
                 )
                 return False
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logging.critical(f"An error occurred: {e}")
             return False
 
     def update_select_tag_on_page(self, new_tag):
@@ -52,7 +52,7 @@ class NotionTask:
                 f"Tag updated successfully on task #{self.note_id} to {new_tag}."
             )
         except Exception as e:
-            logging.error(
+            logging.critical(
                 f"An error occurred updating tag on task #{self.note_id}: {e}"
             )
 
@@ -67,4 +67,4 @@ class NotionTask:
             )
             cache.delete_notion_task(self.note_id)
         except Exception as e:
-            logging.error(f"An error occurred archieving task #{self.note_id}: {e}")
+            logging.critical(f"An error occurred archieving task #{self.note_id}: {e}")
