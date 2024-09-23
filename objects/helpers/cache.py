@@ -24,6 +24,8 @@ async def init_connection():
     await cursor.execute("PRAGMA locking_mode=EXCLUSIVE;")
     locking_mode = (await cursor.fetchone())[0]
     logging.debug(f"Current locking mode: {locking_mode}")
+    await cursor.execute("PRAGMA cache_size = -20000;")
+    await cursor.execute("PRAGMA synchronous=OFF;")
     logging.info("Database connection established.")
 
 
