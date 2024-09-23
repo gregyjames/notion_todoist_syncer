@@ -8,10 +8,10 @@ class NotionTask:
     def __init__(self, id):
         self.note_id = id
 
-    def get_tags_from_page(self) -> bool:
+    async def get_tags_from_page(self) -> bool:
         try:
             # Retrieve the page properties
-            page = NotionWrapper.notion_api.pages.retrieve(page_id=self.note_id)
+            page = await NotionWrapper.notion_api.pages.retrieve(page_id=self.note_id)
 
             # Assuming the tags are stored in a property called "Status"
             select_property = page["properties"].get(
@@ -35,10 +35,10 @@ class NotionTask:
             logging.critical(f"An error occurred: {e}")
             return False
 
-    def update_select_tag_on_page(self, new_tag):
+    async def update_select_tag_on_page(self, new_tag):
         try:
             # Update the page with a new tag in the 'Tags' property (select)
-            NotionWrapper.notion_api.pages.update(
+            await NotionWrapper.notion_api.pages.update(
                 page_id=self.note_id,
                 properties={
                     NotionWrapper.notion_status_tag_name: {

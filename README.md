@@ -59,7 +59,7 @@ A self-hosted bidirectional sync tool for Notion and Todoist to eliminate the ne
     - [ ] Due date
     - [ ] Priority
 - [x] Refactor and Clean up code
-- [ ] Improve performance
+- [x] Improve performance
 - [x] Cron sync loop
 - [x] Sync Reports (i.e failure/success/total/new)
 - [x] Switch to SQLite over TinyDB for note sync cache

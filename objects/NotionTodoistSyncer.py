@@ -7,7 +7,7 @@ from . import TodoistWrapper
 
 
 class NotionTodoistSyncer:
-    def sync_notion_to_todoist():
+    async def sync_notion_to_todoist():
         try:
             response = NotionWrapper.notion_api.databases.query(
                 **{
@@ -22,7 +22,7 @@ class NotionTodoistSyncer:
                 result = cache.db.search(exists_in_todoist.notion_task_id == page_id)
                 if result == []:
                     task = NotionTask(page_id)
-                    is_done = task.get_tags_from_page()
+                    is_done = await task.get_tags_from_page()
                     if not is_done:
                         page_title = page["properties"]["Name"]["title"][0]["text"][
                             "content"

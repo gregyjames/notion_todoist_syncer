@@ -16,7 +16,7 @@ class NotionWrapper:
     database_id = configuration.config.get("database_id")
 
     @classmethod
-    def create_subpage_in_database(self, title, status, priority, due) -> str:
+    async def create_subpage_in_database(self, title, status, priority, due) -> str:
         try:
             notion_priority = todoist_notion_priority_map[priority]
             properties = {
@@ -28,6 +28,7 @@ class NotionWrapper:
             if due is not None:
                 # Uses localtime zone to set due time of new note
                 local_timezone = tzlocal.get_localzone()
+                logging.debug(f"Due date: {due}, Time Zone{local_timezone}")
                 properties["Due Date"] = {
                     "date": {"start": due, "time_zone": str(local_timezone)}
                 }
