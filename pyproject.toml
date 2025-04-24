@@ -8,7 +8,7 @@ dependencies = [
   "apscheduler>=3.10.4",
   "certifi==2024.8.30",
   "charset-normalizer==3.3.2",
-  "h11==0.14.0",
+  "h11==0.16.0",
   "httpcore==1.0.5",
   "httpx==0.27.2",
   "idna==3.10",
